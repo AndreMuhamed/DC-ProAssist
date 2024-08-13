@@ -1,0 +1,44 @@
+{
+    "Game Quest": {
+        "description": "Погрузитесь в мир увлекательных видеоигр с захватывающим сюжетом и уникальными персонажами. Откройте для себя новые горизонты в виртуальных мирах.",
+        "main_link": "https://andremuhamed.nexcord.pro/multilink/game_quest/tamex",
+        "web_link": "https://andremuhamed.nexcord.pro/projects/game_quest/home",
+        "youtube_link": "https://www.youtube.com/@GameQuest_news",
+        "avatar": "assets/Ава_1.jpg"
+    },
+    "Nanson": {
+        "description": "Смотрите эксклюзивные музыкальные хиты и наслаждайтесь высококачественным звуком. Откройте для себя новые треки и любимых исполнителей.",
+        "main_link": "https://andremuhamed.nexcord.pro/multilink/nanson/tanex",
+        "web_link": "https://andremuhamed.nexcord.pro/projects/nanson/home",
+        "youtube_link": "https://www.youtube.com/@Nanson_CFM",
+        "avatar": "assets/zyro-image.jpg"
+    },
+    "ANIME INDUSTRY": {
+        "description": "Откройте для себя захватывающий мир аниме с богатым визуальным стилем и интересными сюжетами. Погрузитесь в фантастические истории и эпические приключения.",
+        "main_link": "https://andremuhamed.nexcord.pro/multilink/kinani_family/tilex",
+        "web_link": "https://andremuhamed.nexcord.pro/projects/kinani_family/home",
+        "youtube_link": "https://www.youtube.com/@ANIME_INDUSTRY_UA",
+        "avatar": "assets/zfk.jpg"
+    },
+    "KINO INDUSTRY": {
+        "description": "Откройте для себя захватывающий мир кино с увлекательными сюжетами и потрясающей актерской игрой. Наслаждайтесь новыми и классическими фильмами.",
+        "main_link": "https://andremuhamed.nexcord.pro/multilink/kinani_family/tilex",
+        "web_link": "https://andremuhamed.nexcord.pro/projects/kinani_family/home",
+        "youtube_link": "https://www.youtube.com/@KINO_INDUSTRY_UA",
+        "avatar": "assets/zfkа.jpg"
+    },
+    "Стримус": {
+        "description": "Смотрите увлекательные видео и стримы, обсуждайте самые интересные события и темы. Присоединяйтесь к сообществу единомышленников.",
+        "main_link": "https://andremuhamed.nexcord.pro/multilink/streamas/timex",
+        "web_link": "https://andremuhamed.nexcord.pro/projects/streamas/home",
+        "youtube_link": "https://www.youtube.com/@Streamas",
+        "avatar": "assets/channels4_profile_auto.jpg"
+    },
+    "creator_support": {
+        "description": "Если вы хотите поддержать меня и мои проекты, пожалуйста, рассмотрите возможность перейти по ссылке и сделать взнос в соответствии с вашими возможностями.",
+        "dpn_link": "https://www.donationalerts.com/r/andremuhamad",
+        "dpo_link": "https://www.patreon.com/andremuhamad",
+        "avatar": "path/to/strimus_avatar.png"
+    }
+}
+
