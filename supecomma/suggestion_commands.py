@@ -8,7 +8,7 @@ class SuggestionCommands(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name='suggest', description='Получить ссылку на приглашение бота и предложить идею.')
-    async def suggest(self, ctx):
+    async def suggest(self, inter: disnake.ApplicationCommandInteraction):
         """Создает сообщение с ссылкой на приглашение бота и кнопкой для подачи предложений."""
         
         # Создание ссылки на приглашение
@@ -32,7 +32,7 @@ class SuggestionCommands(commands.Cog):
         view = View()
         view.add_item(suggestion_button)
 
-        await ctx.send(embed=invite_embed, view=view)
+        await inter.send(embed=invite_embed, view=view)
 
     @commands.Cog.listener()
     async def on_interaction(self, inter: disnake.Interaction):
@@ -60,4 +60,5 @@ class SuggestionModal(Modal):
 
 def setup(bot):
     bot.add_cog(SuggestionCommands(bot))
+
 
