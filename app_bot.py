@@ -19,8 +19,7 @@ from supecomma.config import BOT_TOKEN
 from specialwith.individual import setup as setup_individual
 from specialwith.gamequest_news import setup as setup_gamequest_news
 from specialwith.muhamed import setup as setup_muhamed
-from user_tops.rich_users import setup_rich_users
-from user_tops.sociable_users import setup_sociable_users
+from user_tops.top_commands import setup as setup_topcommands
 from user_tops.avatar_commands import setup_avatar_commands  
 from user_tops.banner_commands import setup_banner_commands  
 from letproject.questionnaires_profile import setup_questionnaires_profile
@@ -66,8 +65,7 @@ setup_test_command(bot)
 setup_lottery(bot)
 
 # Топ пользователи и их оформление
-setup_rich_users(bot)
-setup_sociable_users(bot)
+setup_topcommands(bot)
 setup_avatar_commands(bot)
 setup_banner_commands(bot)
 setup_checkinfo(bot)
