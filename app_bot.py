@@ -20,7 +20,7 @@ from specialwith.individual import setup as setup_individual
 from specialwith.gamequest_news import setup as setup_gamequest_news
 from specialwith.muhamed import setup as setup_muhamed
 from user_tops.top_commands import setup as setup_topcommands
-from user_tops.avatar_commands import setup_avatar_commands  
+from user_tops.avatar_commands import setup_avatar_commands
 from user_tops.banner_commands import setup_banner_commands  
 from letproject.questionnaires_profile import setup_questionnaires_profile
 from letproject.alinitiative import setup_all_initiative
