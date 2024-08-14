@@ -14,7 +14,7 @@
         "last_claim": null,
         "last_sent": "2024-08-12T20:37:06.063838",
         "profile_created": "29.07.2024",
-        "rewards": 5518,
+        "rewards": 4468,
         "status": "\u041d\u0435\u0442 \u0441\u0442\u0430\u0442\u0443\u0441\u0430",
         "telegram": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
         "transactions": [
@@ -40,15 +40,15 @@
         "profile_created": "27.07.2024",
         "rewards": 6000,
         "status": "Rhbdfz ;tyobyf",
+        "status_expiration": "2024-11-12T18:07:23.036850",
         "telegram": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
         "vk": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
-        "voice_online": "0 \u0447, 0 \u043c",
-        "status_expiration": "2024-11-12T18:07:23.036850"
+        "voice_online": "0 \u0447, 0 \u043c"
     },
     "768782555171782667": {
         "instagram": "https://www.instagram.com/admirall_times",
         "last_claim": "2024-08-12T19:42:14.098825",
-        "last_sent": "2024-08-04T20:20:41.475819",
+        "last_sent": "2024-08-14T20:09:57.426519",
         "profile_created": "24.07.2023",
         "rewards": 13049,
         "status": "MODERATOR",

@@ -8,6 +8,7 @@ from features.message_rewards import setup as setup_message_rewards
 from features.checkinfo_commands import setup as setup_checkinfo
 from features.currency_commands import setup_currency_commands
 from features.status_commands import setup_status_commands
+from features.marriage_commands import setup as setup_marriagecommands
 from admin.error_log import handle_exception, log_error
 from admin.data_handler import load_data, save_data, ensure_user_profile
 from supecomma.managemen import setup_managemen
@@ -54,6 +55,7 @@ setup_voice_tracker(bot)
 setup_rewards_commands(bot)
 setup_message_rewards(bot)
 setup_currency_commands(bot)
+setup_marriagecommands(bot)
 setup_status_commands(bot)
 setup_managemen(bot)
 
