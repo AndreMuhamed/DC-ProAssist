@@ -17,7 +17,7 @@ class MessageRewards(commands.Cog):
         if user_id not in data:
             data[user_id] = {"rewards": 0}
         
-        data[user_id]["rewards"] += 150
+        data[user_id]["rewards"] += 1450
         self.save_data(data)
 
         print(f"Added 5 coins to user {user_id}. Total: {data[user_id]['rewards']}")

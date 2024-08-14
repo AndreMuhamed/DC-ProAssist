@@ -7,11 +7,10 @@ class TopCommands(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name='top', description='Показать рейтинг пользователей.')
-    async def top(self, inter: disnake.ApplicationCommandInteraction, 
-                  criteria: str = commands.Param(choices=["balance", "voice"])):
-        if criteria == "balance":
+    async def top(self, inter: disnake.ApplicationCommandInteraction, по: str = commands.Param(choices=["балансу", "онлайну"])):
+        if по == "балансу":
             await self.show_top_rich(inter)
-        elif criteria == "voice":
+        elif по == "онлайну":
             await self.show_top_voice(inter)
 
     async def show_top_rich(self, inter: disnake.ApplicationCommandInteraction):
@@ -26,13 +25,26 @@ class TopCommands(commands.Cog):
             await inter.send("Нет данных о пользователях.")
             return
 
-        embed = disnake.Embed(title="Рейтинг самых богатых пользователей:")
-        for i, (user_id, user_data) in enumerate(sorted_users[:10], start=1):  # Топ-10 пользователей
+        embed = disnake.Embed(
+            title="<:Stickerus9:1269746132070826075> Рейтинг самых богатых пользователей!",
+        )
+
+        for i, (user_id, user_data) in enumerate(sorted_users[:10], start=1):
             rewards = user_data.get('rewards', 0)
-            user = self.bot.get_user(int(user_id))
-            username = user.name if user else 'Не найдено'
-            embed.add_field(name=f"{i}. {username}", value=f"{rewards} монет", inline=False)
-        
+            member = inter.guild.get_member(int(user_id))
+            if member:
+                username = member.mention
+            else:
+                username = f'Не найдено <@{user_id}>'
+
+            embed.add_field(
+                name=f"{i}. {username} — {rewards} монет",
+                value=f"",
+                inline=False
+            )
+
+        embed.set_thumbnail(url=inter.author.display_avatar.url)
+        embed.set_footer(text="Спасибо за вашу активность!")
         await inter.send(embed=embed)
 
     async def show_top_voice(self, inter: disnake.ApplicationCommandInteraction):
@@ -47,14 +59,27 @@ class TopCommands(commands.Cog):
             await inter.send("Нет данных о пользователях.")
             return
 
-        embed = disnake.Embed(title="Рейтинг самых общительных пользователей:")
-        for i, (user_id, user_data) in enumerate(sorted_users[:10], start=1):  # Топ-10 пользователей
+        embed = disnake.Embed(
+            title="<:Stickerus9:1269746132070826075> Рейтинг самых общительных пользователей!",
+        )
+
+        for i, (user_id, user_data) in enumerate(sorted_users[:10], start=1):
             seconds = self.convert_to_seconds(user_data.get('voice_online', 0))
             formatted_time = self.format_seconds(seconds)
-            user = self.bot.get_user(int(user_id))
-            username = user.name if user else 'Не найдено'
-            embed.add_field(name=f"{i}. {username}", value=f"{formatted_time}", inline=False)
-        
+            member = inter.guild.get_member(int(user_id))
+            if member:
+                username = member.mention
+            else:
+                username = f'Не найдено <@{user_id}>'
+
+            embed.add_field(
+                name=f"{i}. {username} — {formatted_time}",
+                value=f"",
+                inline=False
+            )
+
+        embed.set_thumbnail(url=inter.author.display_avatar.url)
+        embed.set_footer(text="Спасибо за вашу активность!")
         await inter.send(embed=embed)
 
     def load_user_data(self):
@@ -74,7 +99,7 @@ class TopCommands(commands.Cog):
     def format_seconds(self, seconds):
         hours = seconds // 3600
         minutes = (seconds % 3600) // 60
-        return f"{hours} ч, {minutes} м"
+        return f"{hours} часов, {minutes} минут"
 
     def convert_to_seconds(self, time_str):
         if isinstance(time_str, int):
@@ -89,4 +114,5 @@ class TopCommands(commands.Cog):
 
 def setup(bot):
     bot.add_cog(TopCommands(bot))
+
 

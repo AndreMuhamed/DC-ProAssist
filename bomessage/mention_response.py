@@ -22,7 +22,7 @@ class MentionResponse(commands.Cog):
                 ),
             )
             embed.set_thumbnail(url=self.bot.user.avatar.url)  # Установка аватарки бота
-            embed.set_footer(text="Благодарим за использование наших сервисов!", icon_url=self.bot.user.avatar.url)
+            embed.set_footer(text="Благодарим за использование наших сервисов!")
             await message.channel.send(embed=embed)
 
 def setup(bot):
