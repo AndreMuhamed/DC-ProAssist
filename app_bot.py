@@ -8,7 +8,6 @@ from features.message_rewards import setup as setup_message_rewards
 from features.checkinfo_commands import setup as setup_checkinfo
 from features.currency_commands import setup_currency_commands
 from features.status_commands import setup_status_commands
-from features.marriage_commands import setup as setup_marriagecommands
 from admin.error_log import handle_exception, log_error
 from admin.data_handler import load_data, save_data, ensure_user_profile
 from supecomma.managemen import setup_managemen
@@ -34,6 +33,10 @@ from bomessage.mention_response import setup as setup_mention_response
 from bomessage.reminder_sender import setup as setup_reminder_sender
 from bomessage.periodic_messages import setup_periodic_tasks
 from bomessage.farewell import setup as setup_farewell_command
+from Familytree.ad import setup as setup_AdoptionCommands
+from Familytree.m import setup as setup_MarriageCommands
+from Familytree.d import setup as setup_Marriage
+from Familytree.t import setup as setup_Tree
 
 intents = disnake.Intents.default()
 intents.messages = True
@@ -55,7 +58,6 @@ setup_voice_tracker(bot)
 setup_rewards_commands(bot)
 setup_message_rewards(bot)
 setup_currency_commands(bot)
-setup_marriagecommands(bot)
 setup_status_commands(bot)
 setup_managemen(bot)
 
@@ -65,6 +67,12 @@ setup_magic_commands(bot)
 setup_layout_fixer(bot)
 setup_test_command(bot)
 setup_lottery(bot)
+
+# Брак
+setup_AdoptionCommands(bot)
+setup_MarriageCommands(bot)
+setup_Marriage(bot)
+setup_Tree(bot)
 
 # Топ пользователи и их оформление
 setup_topcommands(bot)
