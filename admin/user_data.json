@@ -14,7 +14,8 @@
         "last_claim": null,
         "last_sent": "2024-08-12T20:37:06.063838",
         "profile_created": "29.07.2024",
-        "rewards": 5918,
+        "rewarded": true,
+        "rewards": 8818,
         "status": "\u041d\u0435\u0442 \u0441\u0442\u0430\u0442\u0443\u0441\u0430",
         "telegram": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
         "transactions": [
@@ -45,12 +46,24 @@
         "vk": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
         "voice_online": "0 \u0447, 0 \u043c"
     },
+    "739065547026595871": {
+        "instagram": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
+        "last_claim": null,
+        "last_sent": "2024-08-17T11:56:06.636342",
+        "profile_created": "17.08.2024",
+        "rewards": 4350,
+        "status": "\u041d\u0435\u0442 \u0441\u0442\u0430\u0442\u0443\u0441\u0430",
+        "telegram": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
+        "vk": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
+        "voice_online": "0 \u0447, 0 \u043c",
+        "rewarded": true
+    },
     "768782555171782667": {
         "instagram": "https://www.instagram.com/admirall_times",
         "last_claim": "2024-08-12T19:42:14.098825",
         "last_sent": "2024-08-14T20:09:57.426519",
         "profile_created": "24.07.2023",
-        "rewards": 13049,
+        "rewards": 14499,
         "status": "MODERATOR",
         "status_expiration": "2024-08-27T14:08:32.127000+00:00",
         "telegram": "https://t.me/admirall_times",
