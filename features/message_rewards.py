@@ -30,7 +30,7 @@ class MessageRewards(commands.Cog):
                     title="Поздравления о награде!",
                     description=f"Вы получили **награду** за ваше первое сообщение на сервере **Андрея Мухамеда**!",
                 ).add_field(
-                    name="> Награда:", value="```1450```", inline=False
+                    name="> Награда:", value="```1450 монет```", inline=False
                 ).set_footer(
                     text="Спасибо, что присоединились к нам!"
                 ).set_thumbnail(

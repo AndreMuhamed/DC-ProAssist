@@ -51,19 +51,18 @@
         "last_claim": null,
         "last_sent": "2024-08-17T11:56:06.636342",
         "profile_created": "17.08.2024",
-        "rewards": 4350,
+        "rewards": 2900,
         "status": "\u041d\u0435\u0442 \u0441\u0442\u0430\u0442\u0443\u0441\u0430",
         "telegram": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
         "vk": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
-        "voice_online": "0 \u0447, 0 \u043c",
-        "rewarded": true
+        "voice_online": "0 \u0447, 0 \u043c"
     },
     "768782555171782667": {
         "instagram": "https://www.instagram.com/admirall_times",
         "last_claim": "2024-08-12T19:42:14.098825",
         "last_sent": "2024-08-14T20:09:57.426519",
         "profile_created": "24.07.2023",
-        "rewards": 14499,
+        "rewards": 15949,
         "status": "MODERATOR",
         "status_expiration": "2024-08-27T14:08:32.127000+00:00",
         "telegram": "https://t.me/admirall_times",
@@ -83,7 +82,8 @@
             "\u0412\u044b \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u0438 860 \u043c\u043e\u043d\u0435\u0442 \u043e\u0442 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f <@999966065973014579>."
         ],
         "vk": "https://vk.com/addmirall_times",
-        "voice_online": "181 \u0447, 8 \u043c"
+        "voice_online": "181 \u0447, 8 \u043c",
+        "rewarded": true
     },
     "787093771115692062": {
         "instagram": "\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u043e",
