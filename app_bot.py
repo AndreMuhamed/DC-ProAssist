@@ -15,6 +15,8 @@ from supecomma.status_bot import setup as setup_statusbot
 from supecomma.techno_comand import setup_test_command
 from supecomma.lottery_button import setup as setup_lottery
 from supecomma.suggestion_commands import setup as setup_suggestioncommands
+from supecomma.server_info import setup as setup_serverinfo
+from supecomma.emoj_info import setup as setup_emojinfo
 from supecomma.config import BOT_TOKEN
 from specialwith.individual import setup as setup_individual
 from specialwith.gamequest_news import setup as setup_gamequest_news
@@ -33,10 +35,7 @@ from bomessage.mention_response import setup as setup_mention_response
 from bomessage.reminder_sender import setup as setup_reminder_sender
 from bomessage.periodic_messages import setup_periodic_tasks
 from bomessage.farewell import setup as setup_farewell_command
-from Familytree.ad import setup as setup_AdoptionCommands
-from Familytree.m import setup as setup_MarriageCommands
-from Familytree.d import setup as setup_Marriage
-from Familytree.t import setup as setup_Tree
+
 
 intents = disnake.Intents.default()
 intents.messages = True
@@ -68,11 +67,8 @@ setup_layout_fixer(bot)
 setup_test_command(bot)
 setup_lottery(bot)
 
-# Брак
-setup_AdoptionCommands(bot)
-setup_MarriageCommands(bot)
-setup_Marriage(bot)
-setup_Tree(bot)
+# Семья
+
 
 # Топ пользователи и их оформление
 setup_topcommands(bot)
@@ -87,6 +83,8 @@ setup_periodic_tasks(bot)
 setup_mention_response(bot)
 setup_reminder_sender(bot)
 setup_suggestioncommands(bot)
+setup_serverinfo(bot)
+setup_emojinfo(bot)
 
 # Загрузка проектов создателя
 setup_questionnaires_profile(bot)
