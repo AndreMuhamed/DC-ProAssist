@@ -1,2 +1,13 @@
-{}
+{
+    "Traceback (most recent call last):\n  File \"d:\\Z_\u0410\u041d\u0414\u0420\u0415\u0419 \u041c\u0423\u0425\u0410\u041c\u0415\u0414\\\u041f\u0420\u041e\u0413\u0420\u0410\u041c\u0423\u0412\u0410\u041d\u041d\u042f\\DC-Developer_Muhameda\\features\\rewards_commands.py\", line 97, in on_button_click\n    await interaction.send(embed=embed, ephemeral=True)\n  File \"C:\\Users\\anbma\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\disnake\\interactions\\base.py\", line 695, in send\n    await sender(\n  File \"C:\\Users\\anbma\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\disnake\\interactions\\base.py\", line 1023, in send_message\n    await adapter.create_interaction_response(\n  File \"C:\\Users\\anbma\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\disnake\\webhook\\async_.py\", line 210, in request\n    raise HTTPException(response, data)\ndisnake.errors.HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.\n": 1
+}2024-08-18 05:32:43,690 - ERROR - Traceback (most recent call last):
+  File "d:\Z_¿Õƒ–≈… Ã”’¿Ã≈ƒ\œ–Œ√–¿Ã”¬¿ÕÕﬂ\DC-Developer_Muhameda\features\rewards_commands.py", line 97, in on_button_click
+    await interaction.send(embed=embed, ephemeral=True)
+  File "C:\Users\anbma\AppData\Local\Programs\Python\Python312\Lib\site-packages\disnake\interactions\base.py", line 695, in send
+    await sender(
+  File "C:\Users\anbma\AppData\Local\Programs\Python\Python312\Lib\site-packages\disnake\interactions\base.py", line 1023, in send_message
+    await adapter.create_interaction_response(
+  File "C:\Users\anbma\AppData\Local\Programs\Python\Python312\Lib\site-packages\disnake\webhook\async_.py", line 210, in request
+    raise HTTPException(response, data)
+disnake.errors.HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
 
