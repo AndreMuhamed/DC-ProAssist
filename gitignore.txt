@@ -1,0 +1,6 @@
+**/__pycache__/
+.vscode
+
+admin/us_error_log.json
+admin/user_data.json
+supecomma/config.py
