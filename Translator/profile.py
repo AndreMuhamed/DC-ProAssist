@@ -2,8 +2,8 @@ import disnake
 
 translations = {
     "ru": {
-        "view_profile": "Посмотреть профиль",
-        "add_socials": "Добавить социальные сети",
+        "view_profile": "Просмотреть профиль пользователя.",
+        "add_socials": "Добавить ссылки на социальные сети.",
         "status": "Статус",
         "no_status": "Нет статуса",
         "coins": "Монеты",
@@ -22,17 +22,17 @@ translations = {
         "buy_coins_description": "Спасибо за интерес к покупке монет! Для завершения покупки, пожалуйста, свяжитесь с продавцом.",
     },
     "en": {
-        "view_profile": "View Profile",
-        "add_socials": "Add Socials",
+        "view_profile": "View user profile.",
+        "add_socials": "Add links to social networks.",
         "status": "Status",
         "no_status": "No status",
         "coins": "Coins",
         "no_voice_time": "0 h, 0 m",
         "voice_online": "Voice online",
-        "profile_created": "Profile Created",
+        "profile_created": "Profile created",
         "not_provided": "Not provided",
         "profile_title": "Profile — {user}",
-        "buy_coins": "Buy Coins",
+        "buy_coins": "Buy coins",
         "invalid_vk": "Invalid VK link.",
         "invalid_telegram": "Invalid Telegram link.",
         "invalid_instagram": "Invalid Instagram link.",
@@ -42,8 +42,8 @@ translations = {
         "buy_coins_description": "Thank you for your interest in buying coins! To complete your purchase, please contact the seller.",
     },
     "uk": {
-        "view_profile": "Переглянути профіль",
-        "add_socials": "Додати соціальні мережі",
+        "view_profile": "Переглянути профіль користувача.",
+        "add_socials": "Додати посилання до соціальних мереж.",
         "status": "Статус",
         "no_status": "Немає статусу",
         "coins": "Монети",

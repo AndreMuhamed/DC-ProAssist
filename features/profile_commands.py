@@ -1,33 +1,33 @@
-import disnake 
+import disnake  
 from disnake.ext import commands
 from admin.data_handler import load_data, save_data, ensure_user_profile
 from admin.error_log import handle_exception
+from Translator.profile import get_user_language, translations
 import re
 import os
 import json
 from datetime import datetime
-from Translator.profile import get_user_language, translations
+
 
 def setup_profile_commands(bot: commands.Bot):
-    @bot.slash_command(name='profile', description=translations["ru"]["view_profile"])
+    @bot.slash_command(name='profile', description=translations["en"]["view_profile"])  # Описание на русском по умолчанию
     async def profile(inter: disnake.ApplicationCommandInteraction, пользователь: disnake.User = None):
         await inter.response.defer()
 
-        user = пользователь or inter.author
-        lang = get_user_language(user)  # Получаем язык пользователя
-        locale = translations.get(lang, translations["ru"])  # Получаем переводы для данного языка
-
-        print(f"User: {user.name}, Language: {lang}")  # Для отладки
-
+        # Получаем язык пользователя
+        user_language = get_user_language(inter)
+        # Берем переводы для конкретного языка
+        locale = translations[user_language]
 
         try:
+            user = пользователь or inter.author
             user_id = str(user.id)
             data = load_data()  
             ensure_user_profile(data, user_id)  
 
             user_data = data.get(user_id, {})
             avatar_url = user.display_avatar.url if user.display_avatar else user.default_avatar.url
-            status = user_data.get('status', locale.get("status", locale["no_status"]))  # Используем перевод
+            status = user_data.get('status', locale.get("no_status"))  # Используем перевод
             rewards = user_data.get('rewards', 0)
             voice_online = user_data.get('voice_online', locale["no_voice_time"])  # Используем перевод
             vk = user_data.get('vk', locale["not_provided"])  # Используем перевод
@@ -68,15 +68,18 @@ def setup_profile_commands(bot: commands.Bot):
     @bot.listen("on_button_click")
     async def on_button_click(interaction: disnake.MessageInteraction):
         try:
+            user_language = get_user_language(interaction)
+            locale = translations[user_language]  # Используем переводы для кнопки
+
             if interaction.component.custom_id == "buy_coins":
                 seller_avatar_url = "https://cdn.discordapp.com/attachments/963534892082290688/1269283846956781578/626a7fb9f5861b9f.png"
                 
                 embed = disnake.Embed(
-                    title="<:Stickerus8:1269746123673960663> " + translations["ru"]["buy_coins_title"],
-                    description=translations["ru"]["buy_coins_description"],
+                    title="<:Stickerus8:1269746123673960663> " + locale["buy_coins_title"],
+                    description=locale["buy_coins_description"],
                 )
                 embed.add_field(
-                    name=translations["ru"]["seller_link_title"],
+                    name=locale["seller_link_title"],
                     value="<@768782555171782667> или <@787093771115692062>"
                 )
                 embed.set_thumbnail(url=seller_avatar_url)
@@ -86,17 +89,17 @@ def setup_profile_commands(bot: commands.Bot):
         except Exception as e:
             handle_exception(e)
 
-    @bot.slash_command(name='profile_socials', description=translations["ru"]["add_socials"])
+    @bot.slash_command(name='profile_socials', description=translations["en"]["add_socials"])  # Описание на русском по умолчанию
     async def profile_socials(inter: disnake.ApplicationCommandInteraction, vkontakte: str = "", telegram: str = "", instagram: str = ""):
         await inter.response.defer()
 
         try:
+            user_language = get_user_language(inter)
+            locale = translations[user_language]  # Используем переводы для конкретного языка
+
             user_id = str(inter.author.id)
             data = load_data()  
             ensure_user_profile(data, user_id)  
-
-            lang = get_user_language(inter.author)  # Получаем язык пользователя
-            locale = translations.get(lang, translations["ru"])
 
             if vkontakte and not validate_vk_url(vkontakte):
                 await inter.edit_original_response(content=locale["invalid_vk"], ephemeral=True)
@@ -135,7 +138,7 @@ def update_user_data(data, user_id, vkontakte, telegram, instagram):
             user_data["instagram"] = instagram
     else:
         data[user_id] = {
-            "status": translations["ru"]["no_status"],
+            "status": translations["ru"]["no_status"],  # Используем перевод на русском по умолчанию
             "rewards": 0,
             "voice_online": translations["ru"]["no_voice_time"],
             "vk": vkontakte or translations["ru"]["not_provided"],
@@ -162,6 +165,7 @@ def save_data(data):
             json.dump(data, f, indent=4)
     except IOError as e:
         print(f"Ошибка записи данных пользователя: {e}")
+
 
 
 

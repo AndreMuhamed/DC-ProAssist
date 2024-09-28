@@ -1,21 +1,26 @@
 import disnake
 from disnake.ext import commands
+from Translator.welco import get_user_language, translations  # Импортируем функцию и переводы
 
 class WelcomeCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='welcome')
-    @commands.has_permissions(administrator=True)
-    async def welcome(self, ctx, member: disnake.Member):
+    @commands.Cog.listener()
+    async def on_member_join(self, member: disnake.Member):
         """Отправляет приветственное сообщение пользователю при его присоединении."""
+        # Получаем язык пользователя через preferred_locale
+        user_language = member.locale if hasattr(member, 'locale') else 'en'  # Если атрибута нет, используем английский по умолчанию
+        locale = translations.get(user_language, translations['en'])  # Используем переводы для конкретного языка или английский по умолчанию
+
         embed = disnake.Embed(
-            title="<:Stickerus7:1269746114932900041> Добро пожаловать на сервер!",
+            title="<:Stickerus7:1269746114932900041> " + locale["welcome_title"],  # Перевод заголовка
             description=(
-                f"Привет, {member.mention}! Ты находишься на одном из проектов **Андрея Мухамеда**.\n\n"
-                "Рекомендуем подписаться на его другие проекты на YouTube, нажав на кнопки ниже под этим сообщением. **Заранее благодарим!**"
+                f"{locale['welcome_message'].format(member=member.mention)}\n\n" +  # Перевод приветственного сообщения
+                locale["recommendation"]
             ),
         )
+
         # Добавьте кнопки с ссылками на проекты
         view = disnake.ui.View()
         projects = [
@@ -35,13 +40,18 @@ class WelcomeCommand(commands.Cog):
             ]
             embed.set_thumbnail(url="attachment://avatar.jpg")
             embed.set_image(url="attachment://banner.jpg")
-            embed.set_footer(text="Спасибо за вашу будущую активность!")
-            await member.send(embed=embed, view=view, files=files)
-            await ctx.send(f"Приветственное сообщение отправлено пользователю {member.mention}.")
+            embed.set_footer(text=locale["footer_text"])  # Перевод текста в подвале
+            
+            await member.send(embed=embed, view=view, files=files)  # Отправляем сообщение новому участнику
+            print(f"Приветственное сообщение отправлено пользователю {member.name}.")  # Для отладки
+        
         except disnake.Forbidden:
-            await ctx.send(f"Не удалось отправить личное сообщение пользователю {member.mention}. Проверьте настройки конфиденциальности.")
+            print(f"Не удалось отправить личное сообщение пользователю {member.name}. Проверьте настройки конфиденциальности.")
         except Exception as e:
-            await ctx.send(f"Произошла ошибка при отправке личного сообщения пользователю {member.mention}: {str(e)}")
+            print(f"Произошла ошибка при отправке личного сообщения пользователю {member.name}: {str(e)}")  # Печатаем текст ошибки
 
 def setup(bot):
     bot.add_cog(WelcomeCommand(bot))
+
+
+
