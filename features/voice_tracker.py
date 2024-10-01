@@ -33,12 +33,9 @@ def update_voice_online(user_id, duration):
     # Инициализация данных пользователя, если не существует
     if user_id not in data:
         data[user_id] = {
-            "status": "Нет статуса",
-            "rewards": 0,
-            "voice_online": "0 ч, 0 м",
-            "vk": "Не указано",
-            "telegram": "Не указано",
-            "instagram": "Не указано",
+            "status": None,
+            "rewards": "0",
+            "voice_online": "0 h, 0 m",
             "last_claim": None,
             "profile_created": datetime.utcnow().strftime("%d.%m.%Y")
         }
