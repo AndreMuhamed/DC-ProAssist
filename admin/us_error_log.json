@@ -1,8 +1,0 @@
-{
-    "Traceback (most recent call last):\n  File \"c:\\\u041f\u041e\u0422\u0420\u0406\u0411\u041d\u041e\\DC-Developer_Muhameda\\features\\sociability_commands.py\", line 53, in profile_socials\n    await inter.edit_original_response(embed=embed, ephemeral=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Interaction.edit_original_response() got an unexpected keyword argument 'ephemeral'\n": 1
-}2024-10-01 23:55:53,404 - ERROR - Traceback (most recent call last):
-  File "c:\œŒ“–≤¡ÕŒ\DC-Developer_Muhameda\features\sociability_commands.py", line 53, in profile_socials
-    await inter.edit_original_response(embed=embed, ephemeral=True)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: Interaction.edit_original_response() got an unexpected keyword argument 'ephemeral'
-
