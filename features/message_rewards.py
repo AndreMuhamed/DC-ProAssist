@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 import json
+import os
 
 class MessageRewards(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -19,7 +20,11 @@ class MessageRewards(commands.Cog):
             # Обновляем данные пользователя
             if user_id not in data:
                 data[user_id] = {"rewards": 0}
-                
+            else:
+                # Убедитесь, что rewards является целым числом
+                if isinstance(data[user_id]["rewards"], str):
+                    data[user_id]["rewards"] = int(data[user_id]["rewards"])
+
             data[user_id]["rewards"] += 1450
             data[user_id]["rewarded"] = True
             self.save_data(data)
@@ -44,14 +49,17 @@ class MessageRewards(commands.Cog):
         await self.bot.process_commands(message)
 
     def load_data(self):
-        try:
-            with open('admin/user_data.json', 'r') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            print("File not found. Returning empty data.")
+        user_data_path = 'admin/user_data.json'
+        if not os.path.exists(user_data_path):
+            print(f"Файл {user_data_path} не найден, создается новый.")
+            self.save_data({})
             return {}
+
+        try:
+            with open(user_data_path, 'r') as f:
+                return json.load(f)
         except json.JSONDecodeError as e:
-            print(f"JSON Decode Error: {e}")
+            print(f"Ошибка декодирования JSON: {e}")
             return {}
 
     def save_data(self, data):
@@ -59,9 +67,11 @@ class MessageRewards(commands.Cog):
             with open('admin/user_data.json', 'w') as f:
                 json.dump(data, f, indent=4)
         except IOError as e:
-            print(f"File IO Error: {e}")
+            print(f"Ошибка записи данных пользователя: {e}")
 
 def setup(bot: commands.Bot):
     bot.add_cog(MessageRewards(bot))
+
+
 
 
