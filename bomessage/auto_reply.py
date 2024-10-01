@@ -23,7 +23,7 @@ async def send_auto_reply(message: disnake.Message, data, user_id):
         # Обновляем дату последнего сообщения
         update_last_sent(data, user_id)
         save_data(data)
-
+ачссп
 
 
 
