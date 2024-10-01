@@ -1,5 +1,6 @@
 **/__pycache__/
 .vscode
 
+admin/data_handler.py
 supecomma/config.py
 bomessage/auto_reply.py
