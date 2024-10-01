@@ -2,4 +2,4 @@
 .vscode
 
 supecomma/config.py
-admin/user_data.json
+bomessage/auto_reply.py
