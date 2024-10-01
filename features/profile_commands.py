@@ -4,9 +4,6 @@ from admin.data_handler import load_data, save_data, ensure_user_profile
 from admin.error_log import handle_exception
 from Translator.profile import get_user_language, translations
 import re
-import os
-import json
-from datetime import datetime
 
 
 def setup_profile_commands(bot: commands.Bot):
@@ -89,82 +86,6 @@ def setup_profile_commands(bot: commands.Bot):
         except Exception as e:
             handle_exception(e)
 
-    @bot.slash_command(name='profile_socials', description=translations["en"]["add_socials"])  # Описание на русском по умолчанию
-    async def profile_socials(inter: disnake.ApplicationCommandInteraction, vkontakte: str = "", telegram: str = "", instagram: str = ""):
-        await inter.response.defer()
-
-        try:
-            user_language = get_user_language(inter)
-            locale = translations[user_language]  # Используем переводы для конкретного языка
-
-            user_id = str(inter.author.id)
-            data = load_data()  
-            ensure_user_profile(data, user_id)  
-
-            if vkontakte and not validate_vk_url(vkontakte):
-                await inter.edit_original_response(content=locale["invalid_vk"], ephemeral=True)
-                return
-            if telegram and not validate_telegram_url(telegram):
-                await inter.edit_original_response(content=locale["invalid_telegram"], ephemeral=True)
-                return
-            if instagram and not validate_instagram_url(instagram):
-                await inter.edit_original_response(content=locale["invalid_instagram"], ephemeral=True)
-                return
-
-            update_user_data(data, user_id, vkontakte, telegram, instagram)
-            save_data(data)
-            await inter.edit_original_response(content=locale["social_updated"], ephemeral=True)
-        
-        except Exception as e:
-            handle_exception(e)
-
-def validate_vk_url(url):
-    return re.match(r'^https://vk\.com/\w+$', url)
-
-def validate_telegram_url(url):
-    return re.match(r'^https://t\.me/\w+$', url)
-
-def validate_instagram_url(url):
-    return re.match(r'^https://www\.instagram\.com/\w+$', url)
-
-def update_user_data(data, user_id, vkontakte, telegram, instagram):
-    if user_id in data:
-        user_data = data[user_id]
-        if vkontakte:
-            user_data["vk"] = vkontakte
-        if telegram:
-            user_data["telegram"] = telegram
-        if instagram:
-            user_data["instagram"] = instagram
-    else:
-        data[user_id] = {
-            "status": translations["ru"]["no_status"],  # Используем перевод на русском по умолчанию
-            "rewards": 0,
-            "voice_online": translations["ru"]["no_voice_time"],
-            "vk": vkontakte or translations["ru"]["not_provided"],
-            "telegram": telegram or translations["ru"]["not_provided"],
-            "instagram": instagram or translations["ru"]["not_provided"],
-            "profile_created": datetime.utcnow().strftime("%d.%m.%Y")
-        }
-
-def load_data():
-    user_data_path = 'admin/user_data.json'
-    if os.path.exists(user_data_path):
-        try:
-            with open(user_data_path, 'r') as f:
-                return json.load(f)
-        except (json.JSONDecodeError, IOError):
-            return {}
-    else:
-        return {}
-
-def save_data(data):
-    user_data_path = 'admin/user_data.json'
-    try:
-        with open(user_data_path, 'w') as f:
-            json.dump(data, f, indent=4)
-    except IOError as e:
-        print(f"Ошибка записи данных пользователя: {e}")
 
 
 

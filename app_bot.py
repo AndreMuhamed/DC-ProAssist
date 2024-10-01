@@ -2,6 +2,7 @@ import traceback
 import disnake
 from disnake.ext import commands
 from features.profile_commands import setup_profile_commands
+from features.sociability_commands import setup_profile_socials_commands
 from features.voice_tracker import setup_voice_tracker
 from features.rewards_commands import setup_rewards_commands
 from features.message_rewards import setup as setup_message_rewards
@@ -30,11 +31,11 @@ from entertainment.youtube_music import setup_music_commands
 from entertainment.magic_commands import setup_magic_commands
 from entertainment.layout_fixer import setup as setup_layout_fixer
 from bomessage.auto_reply import send_auto_reply
-from bomessage.welcome import setup as setup_welcome_command
+from bomessage.welcome_commands import setup as setup_welcome_command
 from bomessage.mention_response import setup as setup_mention_response
 from bomessage.reminder_sender import setup as setup_reminder_sender
 from bomessage.periodic_messages import setup_periodic_tasks
-from bomessage.farewell import setup as setup_farewell_command
+from bomessage.farewell_commands import setup as setup_farewell_command
 
 
 intents = disnake.Intents.default()
@@ -53,6 +54,7 @@ setup_statusbot(bot)
 
 # Загрузка основных команд
 setup_profile_commands(bot)
+setup_profile_socials_commands(bot)
 setup_voice_tracker(bot)
 setup_rewards_commands(bot)
 setup_message_rewards(bot)
