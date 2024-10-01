@@ -21,16 +21,9 @@ translations = {
     }
 }
 
-def get_user_language(inter: disnake.ApplicationCommandInteraction) -> str:
-    # Преобразуем locale в строку
-    user_locale = str(inter.locale)
-    print(f"User locale: {user_locale}")  # Для отладки
-
-    if user_locale.startswith("ru"):
-        return "ru"
-    elif user_locale.startswith("uk"):
-        return "uk"
-    elif user_locale.startswith("en"):
-        return "en"
-    else:
-        return "ru"  # Русский по умолчанию для всех других языков
+def get_user_language(member: disnake.Member) -> str:
+    # Получаем предпочтительный язык
+    user_language = member.locale or member.preferred_locale
+    if user_language:
+        return user_language.split('-')[0]  # Возвращаем только код языка
+    return 'ru'  # Русский по умолчанию
