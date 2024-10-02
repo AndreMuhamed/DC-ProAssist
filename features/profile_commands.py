@@ -7,7 +7,7 @@ import re
 
 
 def setup_profile_commands(bot: commands.Bot):
-    @bot.slash_command(name='profile', description=translations["en"]["view_profile"])  # Описание на русском по умолчанию
+    @bot.slash_command(name='profile', description=translations["en"]["view_profile"])
     async def profile(inter: disnake.ApplicationCommandInteraction, пользователь: disnake.User = None):
         await inter.response.defer()
 
