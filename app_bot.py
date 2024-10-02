@@ -13,6 +13,7 @@ from admin.error_log import handle_exception, log_error
 from admin.data_handler import load_data, save_data, ensure_user_profile
 from supecomma.managemen import setup_managemen
 from supecomma.status_bot import setup as setup_statusbot
+from supecomma.help_command import setup as setup_helpbotcommands
 from supecomma.techno_comand import setup_test_command
 from supecomma.lottery_button import setup as setup_lottery
 from supecomma.suggestion_commands import setup as setup_suggestioncommands
@@ -50,7 +51,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 # Загрузка данных бота
 data = load_data()
-setup_statusbot(bot)
+
 
 # Загрузка основных команд
 setup_profile_commands(bot)
@@ -63,7 +64,8 @@ setup_shop_status(bot)
 setup_managemen(bot)
 
 # Профиль бота
-MyBotCommands(bot)
+setup_helpbotcommands(bot)
+setup_statusbot(bot)
 
 
 # Розваги пользователей
