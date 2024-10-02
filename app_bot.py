@@ -38,7 +38,7 @@ from bomessage.reminder_sender import setup as setup_reminder_sender
 from bomessage.periodic_messages import setup_periodic_tasks
 from bomessage.farewell_commands import setup as setup_farewell_command
 
-
+# Настройка intents
 intents = disnake.Intents.default()
 intents.messages = True
 intents.message_content = True
@@ -47,111 +47,95 @@ intents.presences = True
 intents.voice_states = True
 intents.guilds = True
 
-bot = commands.Bot(command_prefix="!", intents=intents)
-
 # Загрузка данных бота
 data = load_data()
 
-
-# Загрузка основных команд
-setup_profile_commands(bot)
-setup_profile_socials_commands(bot)
-setup_voice_tracker(bot)
-setup_rewards_commands(bot)
-setup_message_rewards(bot)
-setup_currency_commands(bot)
-setup_shop_status(bot)
-setup_managemen(bot)
-
-# Профиль бота
-setup_helpbotcommands(bot)
-setup_statusbot(bot)
-
-
-# Розваги пользователей
-setup_music_commands(bot)
-setup_magic_commands(bot)
-setup_layout_fixer(bot)
-setup_test_command(bot)
-setup_lottery(bot)
-
-# Семья
-
-
-# Топ пользователи и их оформление
-setup_topcommands(bot)
-setup_avatar_commands(bot)
-setup_banner_commands(bot)
-setup_checkinfo(bot)
-
-# Сообщения от бота
-setup_welcome_command(bot)
-setup_farewell_command(bot)
-setup_periodic_tasks(bot)
-setup_mention_response(bot)
-setup_reminder_sender(bot)
-setup_suggestioncommands(bot)
-setup_serverinfo(bot)
-setup_emojinfo(bot)
-
-# Загрузка проектов создателя
-setup_questionnaires_profile(bot)
-setup_all_initiative(bot)
-
-# Особые команды
-setup_individual(bot)
-setup_gamequest_news(bot)
-setup_muhamed(bot)
-
-@bot.event
-async def on_message(message: disnake.Message):
-    """Обрабатывает сообщения пользователей."""
-    if message.author.bot:
-        return
-
-    # Создаем профиль при первом взаимодействии
-    ensure_user_profile(data, str(message.author.id)) 
-
-    # Обработка команд и сообщений в DMs
-    if message.content.startswith('!'):
-        await bot.process_commands(message)
-        await message.delete()
-    elif isinstance(message.channel, disnake.DMChannel):
-        await send_auto_reply(message, data, str(message.author.id))
-    else:
-        await bot.process_commands(message)
-
-    # Сохранение данных пользователя
-    save_data(data) 
-
-@bot.event
-async def on_command_error(ctx, error):
-    """Обрабатывает ошибки команд и записывает их в файл."""
-    handle_exception(error) 
-
-    if isinstance(error, commands.CommandNotFound):
-        embed = disnake.Embed(
-            title="<:Stickerus5:1269746098809864232> Команда не найдена!",
-            description=f"Извините, команда `{ctx.message.content}` **не распознана**.",
-        )
-        embed.add_field(name="Подсказка:", value="Start all over, but it's not accurate.")
-        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/963534892082290688/1269283846956781578/626a7fb9f5861b9f.png')
-        await ctx.author.send(embed=embed)
-
-@bot.event
-async def on_error(event_method, *args, **kwargs):
-    if args:
-        if isinstance(args[0], Exception):
-            error_message = ''.join(traceback.format_exception(*args)) 
-            log_error(error_message)
-            print(f"An error occurred in {event_method}: {error_message}")
-        else:
-            print(f"An unexpected error occurred in {event_method}: {args[0]}")
-    else:
-        print(f"An unexpected error occurred in {event_method}: No additional information")
-
-@bot.event
+# Обработка события при запуске бота
 async def on_ready():
-    print(f'Logged in as {bot.user}!')
+    print(f'Logged in as {bot.user}!')      
 
-bot.run(BOT_TOKEN)
+# Основной блок
+if __name__ == "__main__":
+    bot = commands.Bot(command_prefix="!", intents=intents)      
+
+    # Загрузка основных команд
+    setup_profile_commands(bot)
+    setup_profile_socials_commands(bot)
+    setup_voice_tracker(bot)
+    setup_rewards_commands(bot)
+    setup_message_rewards(bot)
+    setup_currency_commands(bot)
+    setup_shop_status(bot)
+    setup_managemen(bot)
+
+    # Профиль бота
+    setup_helpbotcommands(bot)
+    setup_statusbot(bot)
+
+    # Розваги пользователей
+    setup_music_commands(bot)
+    setup_magic_commands(bot)
+    setup_layout_fixer(bot)
+    setup_test_command(bot)
+    setup_lottery(bot)
+
+    # Топ пользователи и их оформление
+    setup_topcommands(bot)
+    setup_avatar_commands(bot)
+    setup_banner_commands(bot)
+    setup_checkinfo(bot)
+
+    # Сообщения от бота
+    setup_welcome_command(bot)
+    setup_farewell_command(bot)
+    setup_periodic_tasks(bot)
+    setup_mention_response(bot)
+    setup_reminder_sender(bot)
+    setup_suggestioncommands(bot)
+    setup_serverinfo(bot)
+    setup_emojinfo(bot)
+
+    # Загрузка проектов создателя
+    setup_questionnaires_profile(bot)
+    setup_all_initiative(bot)
+
+    # Особые команды
+    setup_individual(bot)
+    setup_gamequest_news(bot)
+    setup_muhamed(bot)
+
+    @bot.event
+    async def on_message(message: disnake.Message):
+        """Обрабатывает сообщения пользователей."""
+        if message.author.bot:
+            return
+
+        # Создаем профиль при первом взаимодействии
+        ensure_user_profile(data, str(message.author.id)) 
+
+        # Обработка команд и сообщений в DMs
+        if message.content.startswith('!'):
+            await bot.process_commands(message)
+            await message.delete()
+        elif isinstance(message.channel, disnake.DMChannel):
+            await send_auto_reply(message, data, str(message.author.id))
+        else:
+            await bot.process_commands(message)
+
+        # Сохранение данных пользователя
+        save_data(data) 
+
+    @bot.event
+    async def on_error(event_method, *args, **kwargs):
+        if args:
+            if isinstance(args[0], Exception):
+                error_message = ''.join(traceback.format_exception(*args)) 
+                log_error(error_message)
+                print(f"An error occurred in {event_method}: {error_message}")
+            else:
+                print(f"An unexpected error occurred in {event_method}: {args[0]}")
+        else:
+            print(f"An unexpected error occurred in {event_method}: No additional information")
+
+    bot.run(BOT_TOKEN)
+

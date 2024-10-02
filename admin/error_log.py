@@ -18,7 +18,7 @@ logger.addHandler(handler)
 def load_existing_errors():
     if not os.path.exists(error_log_file):
         return defaultdict(int)
-    
+
     with open(error_log_file, 'r') as f:
         try:
             return defaultdict(int, json.load(f))
@@ -41,6 +41,7 @@ def log_error(error_message):
 def handle_exception(exc):
     error_message = ''.join(traceback.format_exception(type(exc), exc, exc.__traceback__))
     log_error(error_message)
+
 
 
 
