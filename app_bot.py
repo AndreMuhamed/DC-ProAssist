@@ -37,6 +37,7 @@ from bomessage.mention_response import setup as setup_mention_response
 from bomessage.reminder_sender import setup as setup_reminder_sender
 from bomessage.periodic_messages import setup_periodic_tasks
 from bomessage.farewell_commands import setup as setup_farewell_command
+from bomessage.handling_commands import setup as setup_errorhandlingCog
 
 # Настройка intents
 intents = disnake.Intents.default()
@@ -92,6 +93,7 @@ if __name__ == "__main__":
     setup_mention_response(bot)
     setup_reminder_sender(bot)
     setup_suggestioncommands(bot)
+    setup_errorhandlingCog(bot)
     setup_serverinfo(bot)
     setup_emojinfo(bot)
 
