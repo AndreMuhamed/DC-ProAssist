@@ -19,7 +19,7 @@ translations = {
     },
     "en": {
         "welcome_title": "Welcome to the server!",
-        "welcome_message": "Hi, {member}! You are on one of **Andrey Muhamed's** projects.",
+        "welcome_message": "Hi, {member}! You are on one of **Andrey Muhameda** projects.",
         "recommendation": "We recommend subscribing to his other projects on YouTube by clicking the buttons below this message. **Thank you in advance!**",
         "links": "Links to YouTube-channels:",
         "footer_text": "Thank you for your future activity!",
