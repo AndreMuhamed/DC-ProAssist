@@ -1,98 +1,98 @@
 import disnake
 from disnake.ext import commands
-from datetime import datetime
+import datetime
 import json
-import re
 import os
+import traceback
+import re
 
-# Глобальный словарь для хранения времени подключения
+# Глобальная переменная для хранения времени подключения
 join_times = {}
 
+# Функция для загрузки данных о пользователях
 def load_user_data():
-    user_data_file = 'admin/user_data.json'
-    if os.path.exists(user_data_file):
-        try:
-            with open(user_data_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except (json.JSONDecodeError, IOError) as e:
-            print(f"Ошибка загрузки данных пользователя: {e}")
-            return {}
+    if os.path.exists("admin/user_data.json"):
+        with open("admin/user_data.json", "r") as file:
+            return json.load(file)
     return {}
 
+# Функция для сохранения данных о пользователях
 def save_user_data(data):
-    user_data_file = 'admin/user_data.json'
-    try:
-        with open(user_data_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-    except IOError as e:
-        print(f"Ошибка записи данных пользователя: {e}")
+    # Проверяем, существует ли директория, и создаем ее, если нет
+    if not os.path.exists("admin"):
+        os.makedirs("admin")
+    
+    with open("admin/user_data.json", "w") as file:
+        json.dump(data, file, indent=4)
 
+import re  # Для работы с регулярными выражениями
+
+# Функция для преобразования строки "45 h, 53 m" в минуты
+def convert_time_to_minutes(time_str):
+    match = re.match(r"(\d+)\s*h,\s*(\d+)\s*m", time_str)
+    if match:
+        hours = int(match.group(1))
+        minutes = int(match.group(2))
+        return hours * 60 + minutes
+    return 0  # Если формат неправильный, возвращаем 0
+
+# Функция для преобразования минут в строку "45 h, 53 m"
+def convert_minutes_to_time(minutes):
+    hours = minutes // 60
+    remaining_minutes = minutes % 60
+    return f"{hours} h, {remaining_minutes} m"
+
+# Функция для обновления времени в голосовых каналах и начисления наград
 def update_voice_time(user_id, duration):
-    data = load_user_data()
+    user_data = load_user_data()
     
-    if user_id not in data:
-        data[user_id] = {
-            "status": None,
-            "rewards": 0,
-            "voice_online": "0 h, 0 m",
-            "last_claim": None,
-            "profile_created": datetime.utcnow().strftime("%d.%m.%Y")
-        }
+    # Если данных о пользователе нет, создаём запись
+    if str(user_id) not in user_data:
+        user_data[str(user_id)] = {"voice_online": 0, "rewards": 0}
+    
+    # Проверяем, является ли "voice_online" строкой и преобразуем её в минуты
+    if isinstance(user_data[str(user_id)]["voice_online"], str):
+        user_data[str(user_id)]["voice_online"] = convert_time_to_minutes(user_data[str(user_id)]["voice_online"])
+    
+    # Преобразуем "rewards" в число, если это строка
+    user_data[str(user_id)]["rewards"] = int(user_data[str(user_id)]["rewards"])
+    
+    # Обновляем время и вознаграждение
+    user_data[str(user_id)]["voice_online"] += duration
+    user_data[str(user_id)]["rewards"] += (duration // 60) * 35  # 8 монет за каждый час
+    
+    # Преобразуем обратно минуты в формат "h, m"
+    user_data[str(user_id)]["voice_online"] = convert_minutes_to_time(user_data[str(user_id)]["voice_online"])
+    
+    # Сохраняем обновлённые данные
+    save_user_data(user_data)
 
-    user_data = data[user_id]
-    
-    current_online_time = user_data.get("voice_online", "0 h, 0 m")
-    
-    # Разбор текущего времени
-    try:
-        hours, minutes = map(int, re.findall(r'\d+', current_online_time))
-    except ValueError as e:
-        print(f"Ошибка разбора времени: {e}")
-        hours, minutes = 0, 0
-
-    # Проверка на корректность типа duration
-    if isinstance(duration, int):
-        total_minutes = hours * 60 + minutes + duration
-    else:
-        print(f"Ошибка: Длительность должна быть целым числом, получено: {type(duration)}")
-        total_minutes = hours * 60 + minutes  # Без добавления длительности
-
-    new_hours, new_minutes = divmod(total_minutes, 60)
-    
-    # Форматирование строки с новым временем
-    user_data["voice_online"] = f"{new_hours} h, {new_minutes} m"
-    
-    # Расчет вознаграждений
-    rewards_gained = (duration // 60) * 8  # 8 монет за каждый час
-    user_data["rewards"] += rewards_gained
-
-    data[user_id] = user_data
-    save_user_data(data)
-    
-    return rewards_gained
-
-def setup_voice_tracker(bot: commands.Bot):
+# Основная функция для отслеживания голосовой активности
+def setup_voice_tracker(bot):
     @bot.event
-    async def on_voice_state_update(member: disnake.Member, before: disnake.VoiceState, after: disnake.VoiceState):
-        user_id = str(member.id)
+    async def on_voice_state_update(member, before, after):
         try:
+            user_id = member.id
+            
+            # Пользователь подключился к голосовому каналу
             if before.channel is None and after.channel is not None:
-                join_times[user_id] = datetime.utcnow()
+                join_times[user_id] = datetime.datetime.now()
+
+            # Пользователь отключился от голосового канала
             elif before.channel is not None and after.channel is None:
                 if user_id in join_times:
-                    duration = (datetime.utcnow() - join_times[user_id]).seconds // 60
-                    del join_times[user_id]
-                    
-                    # Проверка на корректность типа duration
-                    if duration < 0:
-                        print(f"Ошибка: Длительность не может быть отрицательной: {duration}")
-                    else:
-                        print(f"Пользователь {member.display_name} отключился. Длительность: {duration} минут.")
-                    
-                    rewards = update_voice_time(user_id, duration)
-                    print(f"Пользователь {member.display_name} заработал {rewards} наград.")
+                    join_time = join_times.pop(user_id)
+                    time_spent = datetime.datetime.now() - join_time
+                    duration = int(time_spent.total_seconds() // 60)  # Время в минутах
+                    update_voice_time(user_id, duration)
+        
         except Exception as e:
-            print(f"Ошибка в on_voice_state_update: {e}")
+            # Логируем ошибку
+            print(f"An unexpected error occurred in on_voice_state_update: {e}")
+            traceback.print_exc()  # Печатаем полный стек ошибки
+
+
+
 
 
 
