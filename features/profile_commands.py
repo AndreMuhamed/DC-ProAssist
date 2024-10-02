@@ -77,7 +77,7 @@ def setup_profile_commands(bot: commands.Bot):
                 )
                 embed.add_field(
                     name=locale["seller_link_title"],
-                    value="<@768782555171782667> или <@787093771115692062>"
+                    value="<@768782555171782667> , <@787093771115692062>"
                 )
                 embed.set_thumbnail(url=seller_avatar_url)
                 
