@@ -59,7 +59,7 @@ def update_voice_time(user_id, duration):
     
     # Обновляем время и вознаграждение
     user_data[str(user_id)]["voice_online"] += duration
-    user_data[str(user_id)]["rewards"] += (duration // 60) * 35  # 8 монет за каждый час
+    user_data[str(user_id)]["rewards"] += (duration // 60) * 15  # 15 монет за каждый час
     
     # Преобразуем обратно минуты в формат "h, m"
     user_data[str(user_id)]["voice_online"] = convert_minutes_to_time(user_data[str(user_id)]["voice_online"])
