@@ -8,7 +8,7 @@ from features.rewards_commands import setup_rewards_commands
 from features.message_rewards import setup as setup_message_rewards
 from features.checkinfo_commands import setup as setup_checkinfo
 from features.currency_commands import setup_currency_commands
-from features.status_commands import setup_status_commands
+from features.shop_status import setup_shop_status
 from admin.error_log import handle_exception, log_error
 from admin.data_handler import load_data, save_data, ensure_user_profile
 from supecomma.managemen import setup_managemen
@@ -59,8 +59,12 @@ setup_voice_tracker(bot)
 setup_rewards_commands(bot)
 setup_message_rewards(bot)
 setup_currency_commands(bot)
-setup_status_commands(bot)
+setup_shop_status(bot)
 setup_managemen(bot)
+
+# Профиль бота
+MyBotCommands(bot)
+
 
 # Розваги пользователей
 setup_music_commands(bot)

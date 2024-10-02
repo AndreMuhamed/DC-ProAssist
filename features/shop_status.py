@@ -4,7 +4,7 @@ import json
 from datetime import datetime, timedelta, timezone
 from supecomma.config import ROLES
 
-def setup_status_commands(bot: commands.Bot):
+def setup_shop_status(bot: commands.Bot):
     @bot.slash_command(name='shop_status', description='Показать магазин статусов.')
     async def shop_status(inter: disnake.ApplicationCommandInteraction):
         await send_shop_page(inter, page=1, new_message=True)
