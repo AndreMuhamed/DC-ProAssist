@@ -1,4 +1,4 @@
-import traceback  
+import traceback   
 import disnake
 from disnake.ext import commands
 from features.profile_commands import setup_profile_commands
@@ -19,6 +19,7 @@ from supecomma.lottery_button import setup as setup_lottery
 from supecomma.suggestion_commands import setup as setup_suggestioncommands
 from supecomma.server_info import setup as setup_serverinfo
 from supecomma.emoj_info import setup as setup_emojinfo
+from supecomma.delete_comand import setup as setup_deletemessagescog
 from supecomma.config import BOT_TOKEN
 from specialwith.individual import setup as setup_individual
 from specialwith.gamequest_news import setup as setup_gamequest_news
@@ -37,7 +38,7 @@ from bomessage.mention_response import setup as setup_mention_response
 from bomessage.reminder_sender import setup as setup_reminder_sender
 from bomessage.periodic_messages import setup_periodic_tasks
 from bomessage.farewell_commands import setup as setup_farewell_command
-from bomessage.handling_commands import setup as setup_errorhandlingCog
+from bomessage.handling_commands import setup as setup_errorhandlingcog
 
 # Настройка intents
 intents = disnake.Intents.default()
@@ -68,6 +69,7 @@ if __name__ == "__main__":
     # Профиль бота
     setup_helpbotcommands(bot)
     setup_statusbot(bot)
+    setup_deletemessagescog(bot)
 
     # Розваги пользователей
     setup_music_commands(bot)
@@ -89,7 +91,7 @@ if __name__ == "__main__":
     setup_mention_response(bot)
     setup_reminder_sender(bot)
     setup_suggestioncommands(bot)
-    setup_errorhandlingCog(bot)
+    setup_errorhandlingcog(bot)
     setup_serverinfo(bot)
     setup_emojinfo(bot)
 
@@ -113,10 +115,15 @@ if __name__ == "__main__":
             return
 
         # Создаем профиль при первом взаимодействии
-        ensure_user_profile(data, str(message.author.id)) 
+        ensure_user_profile(data, str(message.author.id))
 
         # Сохранение данных пользователя
         save_data(data) 
+
+        # Вызываем send_auto_reply для каждой полученной DM
+        if isinstance(message.channel, disnake.DMChannel):
+            user_id = message.author.id  # ID пользователя
+            await send_auto_reply(message, data, user_id)   
 
     @bot.event
     async def on_error(event_method, *args, **kwargs):
@@ -131,9 +138,5 @@ if __name__ == "__main__":
             print(f"An unexpected error occurred in {event_method}: No additional information")
 
     bot.run(BOT_TOKEN)
-
-
-
-
 
 
