@@ -39,6 +39,7 @@ from bomessage.reminder_sender import setup as setup_reminder_sender
 from bomessage.periodic_messages import setup_periodic_tasks
 from bomessage.farewell_commands import setup as setup_farewell_command
 from bomessage.handling_commands import setup as setup_errorhandlingcog
+from bomessage.check_command import setup as setup_rolecheckcommand
 
 # Настройка intents
 intents = disnake.Intents.default()
@@ -68,6 +69,7 @@ if __name__ == "__main__":
 
     # Профиль бота
     setup_helpbotcommands(bot)
+    setup_rolecheckcommand(bot)
     setup_statusbot(bot)
     setup_deletemessagescog(bot)
 
