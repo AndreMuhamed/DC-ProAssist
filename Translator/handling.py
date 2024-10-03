@@ -1,38 +1,21 @@
-import disnake
-
 translations = {
     'ru': {
-        'title': "<:Stickerus5:1269746098809864232> Команда не найдена!",
-        'description': "Извините, команда `{command}` **не распознана**.",
-        'hint': "Начните сначала, но это не точно."
-    },
-    'en': {
-        'title': "<:Stickerus5:1269746098809864232> Command not found!",
-        'description': "Sorry, the command `{command}` **was not recognized**.",
-        'hint': "Start all over, but it's not accurate."
+        'error_title': "Команда не найдена!",
+        'error_message': "Команда `{command}` не найдена. Проверьте, правильно ли вы ввели название команды.",
+        'clue':"Подсказки от Андрея Мухамеда:",
+        'hint': "Начни сначала, но это не точно. Новое начало может открыть большие возможности.",
     },
     'uk': {
-        'title': "<:Stickerus5:1269746098809864232> Команда не знайдена!",
-        'description': "Вибачте, команда `{command}` **не розпізнана**.",
-        'hint': "Почніть спочатку, але це не точно."
-    }
+        'error_title': "Команда не найдена!",
+        'error_message': "Команда `{command}` не знайдена. Перевірте, чи ви правильно ввели назву команди.",
+        'clue':"Підсказа от Андрея Мухамеда:",
+        'hint': "Почни спочатку, але це не точно. Новий початок може відкрити великі можливості.",
+    },
+    'en': {
+        'error_title': "Team not found!",
+        'error_message': "Command `{command}` not found. Check that you entered the command name correctly.",
+        'clue': "Tip from Andrey Muhamed:",
+        'hint': "Start over, but it's not accurate. A new beginning can open up great opportunities.",
+    },
 }
 
-def get_user_language(ctx: disnake.ApplicationCommandInteraction) -> str:
-    # Проверяем, если это обычное сообщение или взаимодействие
-    if isinstance(ctx, disnake.ApplicationCommandInteraction):
-        user_locale = str(ctx.locale)
-    else:
-        # Для текстовых команд (message context)
-        user_locale = str(ctx.guild.preferred_locale) if ctx.guild else 'ru'
-
-    print(f"User locale: {user_locale}")  # Для отладки
-
-    if user_locale.startswith("ru"):
-        return "ru"
-    elif user_locale.startswith("uk"):
-        return "uk"
-    elif user_locale.startswith("en"):
-        return "en"
-    else:
-        return "ru"  # Русский по умолчанию для всех других языков
