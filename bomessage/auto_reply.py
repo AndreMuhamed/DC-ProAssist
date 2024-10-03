@@ -1,4 +1,4 @@
-import disnake 
+import disnake
 from disnake.ui import View, Button
 from admin.data_handler import update_last_sent, save_data
 from Translator.auto import translations  # Импортируем переводы
@@ -16,6 +16,7 @@ class LanguageSelector(View):
             "uk": "assets/working_24_7_uk.gif",  # Путь к гифке для украинского
             "en": "assets/working_24_7_en.gif",  # Путь к гифке для английского
         }
+        self.saved_message_id = None  # Для сохранения идентификатора сообщения
 
         # Создание кнопок с эмодзи
         button_ru = Button(emoji="<:russia:1291223840994627595>", style=disnake.ButtonStyle.secondary, custom_id="select_ru")
@@ -27,8 +28,24 @@ class LanguageSelector(View):
         self.add_item(button_uk)
         self.add_item(button_en)
 
-    async def send_new_message(self, lang_code, interaction):
-        """Редактирует текущее сообщение с гифкой и переводом в зависимости от выбранного языка."""
+    async def send_initial_message(self, channel):
+        """Отправляет первоначальное сообщение и сохраняет его идентификатор."""
+        lang_translations = translations["ru"]  # По умолчанию русский
+        embed = disnake.Embed(
+            title=f"<:icons31:1274836415833833572> {lang_translations['title']}",
+            description=lang_translations['description'],
+        )
+
+        gif_path = self.gif_mapping["ru"]  # Путь к гифке по умолчанию
+        file = disnake.File(gif_path)  # Создаём объект File
+        embed.set_image(url="attachment://working_24_7.gif")  # Укажите имя гифки по умолчанию
+
+        # Отправка первоначального сообщения с выбором языка
+        self.saved_message = await channel.send(embed=embed, view=self, file=file)
+        self.saved_message_id = self.saved_message.id  # Сохранение идентификатора сообщения
+
+    async def send_new_message(self, lang_code, channel):
+        """Редактирует сохраненное сообщение с гифкой и переводом в зависимости от выбранного языка."""
         lang_translations = translations.get(lang_code, translations["ru"])  # По умолчанию русский
         embed = disnake.Embed(
             title=f"<:icons31:1274836415833833572> {lang_translations['title']}",
@@ -43,15 +60,17 @@ class LanguageSelector(View):
             embed.set_image(url=f"attachment://{os.path.basename(gif_path)}")  # Устанавливаем гифку
             
             try:
-                # Редактируем текущее сообщение с embed и гифкой
-                await interaction.response.edit_message(embed=embed, file=file)
+                print(f"Пытаемся редактировать сообщение: {self.saved_message_id}")
+                # Редактируем сохраненное сообщение с новым embed и гифкой
+                await self.saved_message.edit(embed=embed, view=self, file=file)
+                print("Сообщение успешно обновлено.")
             except disnake.Forbidden:
                 print("У бота нет прав редактировать это сообщение.")
             except Exception as e:
                 print(f"Произошла ошибка при редактировании сообщения: {e}")
         else:
-            print(f"File not found: {gif_path}")
-            await interaction.response.edit_message(content="Гифка не найдена.")
+            print(f"Файл не найден: {gif_path}")
+            await channel.send("Гифка не найдена.")
 
         # Обновляем дату последнего сообщения
         update_last_sent(self.data, self.user_id)
@@ -59,69 +78,42 @@ class LanguageSelector(View):
 
     async def interaction_check(self, interaction: disnake.MessageInteraction) -> bool:
         """Проверка взаимодействия."""
-        # Добавляем отладочный вывод
-        print(f"Interaction received: {interaction.type}, User: {interaction.user}")
-        
+        print(f"Получено взаимодействие: {interaction.type}, Пользователь: {interaction.user}")
+
         if interaction.type == disnake.InteractionType.component:
             if interaction.user == self.message.author:
                 lang_code = None
+                
                 # Получаем custom_id из interaction.data
-                if interaction.data.get('custom_id') == "select_ru":
+                custom_id = interaction.data.get('custom_id')
+                if custom_id == "select_ru":
                     lang_code = "ru"
-                elif interaction.data.get('custom_id') == "select_uk":
+                elif custom_id == "select_uk":
                     lang_code = "uk"
-                elif interaction.data.get('custom_id') == "select_en":
+                elif custom_id == "select_en":
                     lang_code = "en"
                 
                 if lang_code:
-                    print(f"Selected language: {lang_code}")  # Отладочный вывод
-                    await self.send_new_message(lang_code, interaction)  # Редактируем текущее сообщение
-                    return True
-        
-        print("Interaction not processed: either not a component or not the message author.")
+                    print(f"Выбранный язык: {lang_code}")
+
+                    # Проверяем, был ли уже ответ
+                    if not interaction.response.is_done():
+                        await interaction.response.defer()  # Отложенный ответ
+                        print("Ответ отложен, переходим к отправке нового сообщения...")
+                        await self.send_new_message(lang_code, interaction.channel)  # Отправляем новое сообщение
+                        return True
+                    else:
+                        print("Взаимодействие уже было обработано.")
+    
+        print("Взаимодействие не обработано: либо это не компонент, либо не автор сообщения.")
         return False  # Не выполняем действия, если пользователь не автор сообщения
 
 async def send_auto_reply(message: disnake.Message, data, user_id):
     """Отправляет сообщение с гифкой в ответ на сообщение пользователя и обновляет дату последнего сообщения."""
     channel = message.channel
     if isinstance(channel, disnake.DMChannel) and not message.author.bot:
-        embed = disnake.Embed(
-            title=f"<:icons31:1274836415833833572> {translations['ru']['title']}",
-            description=translations['ru']['description'],
-        )
-        
-        # Устанавливаем гифку по умолчанию
-        gif_path = "assets/working_24_7.gif"
-        if os.path.exists(gif_path):
-            file = disnake.File(gif_path)  # Создаём объект File
-            
-            # Отправка первоначального сообщения с выбором языка
-            embed.set_image(url="attachment://working_24_7.gif")  # Укажите имя гифки по умолчанию
-            view = LanguageSelector(message, data, user_id)
-            await channel.send(embed=embed, view=view, file=file)
-        else:
-            await channel.send("Гифка по умолчанию не найдена.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        view = LanguageSelector(message, data, user_id)
+        await view.send_initial_message(channel)  # Отправляем первоначальное сообщение
 
 
 

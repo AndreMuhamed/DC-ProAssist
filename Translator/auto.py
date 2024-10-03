@@ -10,7 +10,7 @@ translations = {
     "uk": {
         "title": "Сповіщення!",
         "description": (
-            "Бот працює **24/7** над проектами **Андрія Мухамеда**.\n"
+            "Бот працює **24/7** над проектами **Андрея Мухамеда**.\n"
             "І не має можливості **відповідати** на твої круті повідомлення.\n\n"
             "Відвідайте [цей сайт](https://andremuhamed.nexcord.pro/) для отримання додаткової інформації!"
         ),
@@ -18,7 +18,7 @@ translations = {
     "en": {
         "title": "Notification!",
         "description": (
-            "The bot works **24/7** on **Andrei Mukhamed** projects.\n"
+            "The bot works **24/7** on **Andrey Muhameda** projects.\n"
             "And cannot **respond** to your cool messages.\n\n"
             "Visit [this site](https://andremuhamed.nexcord.pro/) for more information!"
         ),
