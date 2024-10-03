@@ -1,4 +1,4 @@
-import traceback
+import traceback 
 import disnake
 from disnake.ext import commands
 from features.profile_commands import setup_profile_commands
@@ -50,10 +50,6 @@ intents.guilds = True
 
 # Загрузка данных бота
 data = load_data()
-
-# Обработка события при запуске бота
-async def on_ready():
-    print(f'Logged in as {bot.user}!')      
 
 # Основной блок
 if __name__ == "__main__":
@@ -107,6 +103,10 @@ if __name__ == "__main__":
     setup_muhamed(bot)
 
     @bot.event
+    async def on_ready():
+        print(f'Bot is online as {bot.user}!')
+
+    @bot.event
     async def on_message(message: disnake.Message):
         """Обрабатывает сообщения пользователей."""
         if message.author.bot:
@@ -140,4 +140,5 @@ if __name__ == "__main__":
             print(f"An unexpected error occurred in {event_method}: No additional information")
 
     bot.run(BOT_TOKEN)
+
 
