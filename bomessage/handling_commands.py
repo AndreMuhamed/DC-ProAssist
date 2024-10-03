@@ -1,15 +1,32 @@
-import disnake
+import disnake  
 from disnake.ext import commands
 from Translator.handling import translations  # Импортируем переводы
-
 
 class ErrorHandlingCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.Cog.listener()
+    async def on_message(self, message: disnake.Message):
+        """Обрабатывает сообщения пользователей."""
+        if message.author.bot:
+            return
+
+        # Если сообщение начинается с префикса "!", обрабатываем команду
+        if message.content.startswith('!'):
+            print(f"Обработка команды: {message.content}")  # Для отладки
+            
+            # Удаление сообщения перед обработкой команды
+            await message.delete()
+
+            # Обработка команды
+            await self.bot.process_commands(message)
+
+    @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        # Проверяем, что это не ошибка, связанная с командой не найденной
         if isinstance(error, commands.CommandNotFound):
+            print(f"Ошибка обработчика: {error}")  # Для отладки
             try:
                 user_language = 'ru'  # По умолчанию русский
 
@@ -35,9 +52,6 @@ class ErrorHandlingCog(commands.Cog):
 
                 # Отправляем сообщение об ошибке
                 error_message = await ctx.author.send(embed=embed, view=view)
-
-                # Сохраняем ID сообщения для редактирования
-                view.message_id = error_message.id
 
             except disnake.Forbidden:
                 print(f"Не удалось отправить личное сообщение пользователю {ctx.author.name}. Проверьте настройки конфиденциальности.")
@@ -89,9 +103,13 @@ class ErrorHandlingCog(commands.Cog):
         # Редактируем сообщение с ошибкой и обновленными кнопками
         await interaction.message.edit(embed=embed, view=new_view)
 
-
 def setup(bot):
     bot.add_cog(ErrorHandlingCog(bot))
+
+
+
+
+
 
 
 

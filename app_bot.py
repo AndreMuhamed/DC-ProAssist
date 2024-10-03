@@ -1,4 +1,4 @@
-import traceback 
+import traceback  
 import disnake
 from disnake.ext import commands
 from features.profile_commands import setup_profile_commands
@@ -115,15 +115,6 @@ if __name__ == "__main__":
         # Создаем профиль при первом взаимодействии
         ensure_user_profile(data, str(message.author.id)) 
 
-        # Обработка команд и сообщений в DMs
-        if message.content.startswith('!'):
-            await bot.process_commands(message)
-            await message.delete()
-        elif isinstance(message.channel, disnake.DMChannel):
-            await send_auto_reply(message, data, str(message.author.id))
-        else:
-            await bot.process_commands(message)
-
         # Сохранение данных пользователя
         save_data(data) 
 
@@ -140,5 +131,9 @@ if __name__ == "__main__":
             print(f"An unexpected error occurred in {event_method}: No additional information")
 
     bot.run(BOT_TOKEN)
+
+
+
+
 
 
