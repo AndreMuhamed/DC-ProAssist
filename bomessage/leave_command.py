@@ -1,4 +1,4 @@
-import disnake     
+import disnake
 from disnake.ext import commands
 from disnake.ui import Button, View
 import json
@@ -31,43 +31,42 @@ class LeaveCommand(commands.Cog):
 
     async def send_goodbye_message(self, guild: disnake.Guild):
         """Отправляет сообщение о том, что бот уходит с сервера."""
-        for channel in guild.text_channels:
-            if channel.permissions_for(guild.me).send_messages:
-                embed = disnake.Embed(
-                    title=translations["ru"]["bot_leaving_title"],
-                    description=translations["ru"]["bot_leaving_description"].format(server_name=guild.name),
-                )
+        system_channel = guild.system_channel  # Канал для системных сообщений
+        if system_channel and system_channel.permissions_for(guild.me).send_messages:
+            embed = disnake.Embed(
+                title=translations["ru"]["bot_leaving_title"],
+                description=translations["ru"]["bot_leaving_description"].format(server_name=guild.name),
+            )
 
-                # Пример URL GIF, замените на ваш
-                gif_url = "https://media.discordapp.net/attachments/1089651879836913817/1291372224581861386/5f7559606a38ee11.gif?"  # Замените это на ваш URL
-                embed.set_image(url=gif_url)  # Добавление GIF в эмбед
+            # Пример URL GIF, замените на ваш
+            gif_url = "https://media.discordapp.net/attachments/1089651879836913817/1291372224581861386/5f7559606a38ee11.gif?"  # Замените это на ваш URL
+            embed.set_image(url=gif_url)  # Добавление GIF в эмбед
 
-                # Добавляем новый подпункт для доступа к продавцам
-                embed.add_field(
-                    name=translations["ru"]["seller_link_title"],
-                    value="<@768782555171782667>, <@787093771115692062>",
-                    inline=False
-                )
+            # Добавляем новый подпункт для доступа к продавцам
+            embed.add_field(
+                name=translations["ru"]["seller_link_title"],
+                value="<@768782555171782667>, <@787093771115692062>",
+                inline=False
+            )
 
-                # Кнопки для выбора языка
-                view_language = View()
-                button_ru = Button(label="Русский", style=disnake.ButtonStyle.danger, custom_id="select_ru")
-                button_uk = Button(label="Українська", style=disnake.ButtonStyle.danger, custom_id="select_uk")
-                button_en = Button(label="English", style=disnake.ButtonStyle.danger, custom_id="select_en")
+            # Кнопки для выбора языка
+            view_language = View()
+            button_ru = Button(label="Русский", style=disnake.ButtonStyle.danger, custom_id="select_ru")
+            button_uk = Button(label="Українська", style=disnake.ButtonStyle.danger, custom_id="select_uk")
+            button_en = Button(label="English", style=disnake.ButtonStyle.danger, custom_id="select_en")
 
-                view_language.add_item(button_ru)
-                view_language.add_item(button_uk)
-                view_language.add_item(button_en)
+            view_language.add_item(button_ru)
+            view_language.add_item(button_uk)
+            view_language.add_item(button_en)
 
-                # Кнопка со ссылкой на проекты создателя (постоянный URL)
-                project_url = "https://andremuhamed.nexcord.pro/multilink/creator/torex"  # Замените на URL проектов
-                project_button = Button(label=translations["ru"]["creator_projects_label"], style=disnake.ButtonStyle.link, url=project_url)
-                view_language.add_item(project_button)
+            # Кнопка со ссылкой на проекты создателя (постоянный URL)
+            project_url = "https://andremuhamed.nexcord.pro/multilink/creator/torex"  # Замените на URL проектов
+            project_button = Button(label=translations["ru"]["creator_projects_label"], style=disnake.ButtonStyle.link, url=project_url)
+            view_language.add_item(project_button)
 
-                # Отправляем сообщение и сохраняем его ID
-                message = await channel.send(embed=embed, view=view_language)
-                self.goodbye_message_id[str(guild.id)] = message.id
-                break
+            # Отправляем сообщение и сохраняем его ID
+            message = await system_channel.send(embed=embed, view=view_language)
+            self.goodbye_message_id[str(guild.id)] = message.id
 
         # Ждем 2 минуты перед выходом с сервера
         await asyncio.sleep(120)  # 120 секунд = 2 минуты
@@ -121,6 +120,7 @@ class LeaveCommand(commands.Cog):
 
 def setup(bot):
     bot.add_cog(LeaveCommand(bot))
+
 
 
 

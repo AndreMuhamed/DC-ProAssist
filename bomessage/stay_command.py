@@ -1,9 +1,9 @@
-import disnake     
+import disnake
 from disnake.ext import commands
 from disnake.ui import Button, View
 import json
 import os
-from Translator.stay import translations  # Импортируем переводы 
+from Translator.stay import translations  # Импортируем переводы
 
 class StayCommand(commands.Cog):
     def __init__(self, bot):
@@ -30,35 +30,43 @@ class StayCommand(commands.Cog):
 
     async def send_staying_message(self, guild: disnake.Guild):
         """Отправляет сообщение о том, что бот остается на сервере."""
-        for channel in guild.text_channels:
-            if channel.permissions_for(guild.me).send_messages:
-                embed = disnake.Embed(
-                    title=translations["ru"]["stay_message_title"],
-                    description=translations["ru"]["stay_message_description"].format(server_name=guild.name),
-                )
+        # Получаем системный канал
+        system_channel = guild.system_channel
 
-                # Добавляем GIF в эмбед
-                gif_url = "https://media.discordapp.net/attachments/1089651879836913817/1291372224581861386/5f7559606a38ee11.gif?"
-                embed.set_image(url=gif_url)  # Добавление GIF
+        if system_channel and system_channel.permissions_for(guild.me).send_messages:
+            # Отправляем сообщение в системный канал
+            channel = system_channel
+        else:
+            # Если системный канал не настроен, выбираем первый доступный текстовый канал
+            channel = next((ch for ch in guild.text_channels if ch.permissions_for(guild.me).send_messages), None)
+        
+        if channel:
+            embed = disnake.Embed(
+                title=translations["ru"]["stay_message_title"],
+                description=translations["ru"]["stay_message_description"].format(server_name=guild.name),
+            )
 
-                # Кнопки для выбора языка
-                view = View()
-                button_ru = Button(label="Русский", style=disnake.ButtonStyle.danger, custom_id="select_ru")
-                button_uk = Button(label="Українська", style=disnake.ButtonStyle.danger, custom_id="select_uk")
-                button_en = Button(label="English", style=disnake.ButtonStyle.danger, custom_id="select_en")
+            # Добавляем GIF в эмбед
+            gif_url = "https://media.discordapp.net/attachments/1089651879836913817/1291372224581861386/5f7559606a38ee11.gif?"
+            embed.set_image(url=gif_url)  # Добавление GIF
 
-                view.add_item(button_ru)
-                view.add_item(button_uk)
-                view.add_item(button_en)
+            # Кнопки для выбора языка
+            view = View()
+            button_ru = Button(label="Русский", style=disnake.ButtonStyle.danger, custom_id="select_ru")
+            button_uk = Button(label="Українська", style=disnake.ButtonStyle.danger, custom_id="select_uk")
+            button_en = Button(label="English", style=disnake.ButtonStyle.danger, custom_id="select_en")
 
-                # Кнопка с постоянной ссылкой на проекты создателя
-                button_projects = Button(label=translations["ru"]["projects_button"], 
-                                         url="https://andremuhamed.nexcord.pro/multilink/creator/torex", 
-                                         style=disnake.ButtonStyle.link)
-                view.add_item(button_projects)
+            view.add_item(button_ru)
+            view.add_item(button_uk)
+            view.add_item(button_en)
 
-                await channel.send(embed=embed, view=view)
-                break
+            # Кнопка с постоянной ссылкой на проекты создателя
+            button_projects = Button(label=translations["ru"]["projects_button"], 
+                                     url="https://andremuhamed.nexcord.pro/multilink/creator/torex", 
+                                     style=disnake.ButtonStyle.link)
+            view.add_item(button_projects)
+
+            await channel.send(embed=embed, view=view)
 
     @commands.Cog.listener()
     async def on_interaction(self, interaction: disnake.MessageInteraction):
@@ -97,5 +105,6 @@ class StayCommand(commands.Cog):
 
 def setup(bot):
     bot.add_cog(StayCommand(bot))
+
 
 
