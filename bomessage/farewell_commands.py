@@ -25,7 +25,7 @@ class FarewellCommand(commands.Cog):
 
         # Создаем сообщение embed
         embed = disnake.Embed(
-            title="<:Stickerus7:1269746114932900041> " + locale["farewell_title"],
+            title=locale["farewell_title"],
             description=(locale["farewell_message"].format(member=member.mention) + "\n\n" +
                          locale["recommendation"] + "\n\n" +
                          locale["links"] + "\n" +
@@ -86,7 +86,7 @@ class FarewellCommand(commands.Cog):
 
         # Обновляем embed с новым языком
         locale = translations[lang_code]
-        embed.title = "<:Stickerus7:1269746114932900041> " + locale["farewell_title"]
+        embed.title =locale["farewell_title"]
         embed.description = (
             locale["farewell_message"].format(member=member.mention) + "\n\n" +
             locale["recommendation"] + "\n\n" +

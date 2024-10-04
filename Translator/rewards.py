@@ -3,9 +3,9 @@ import disnake
 translations = {
     "ru": {
         "view_reward": "Получить награду в виде монет.",
-        "reward_received": "Вознаграждение получено — {name}",
+        "reward_received": "<:icons37:1274836468971344006> Вознаграждение получено — {name}",
         "reward_message": "Вы получили вознаграждение в сумме **{amount}** монет.\nТеперь у вас в профиле **{total}** монет.",
-        "reward_already_claimed": "Вознаграждение уже получено — {name}",
+        "reward_already_claimed": "<:icons30:1274836408057725009> Вознаграждение уже получено — {name}",
         "already_claimed_message": "Вы **уже** получили **вознаграждение!**\nВы можете **получить** следующую через **{hours}** ч **{minutes}** мин.",
         "thank_you": "Спасибо за вашу активность!",
         "buy_coins": "Купить монеты",
@@ -15,9 +15,9 @@ translations = {
     },
     "uk": {
         "view_reward": "Отримати нагороду у вигляді монет.",
-        "reward_received": "Нагорода отримана — {name}",
+        "reward_received": "<:icons37:1274836468971344006> Нагорода отримана — {name}",
         "reward_message": "Ви отримали нагороду в сумі **{amount}** монет.\nТепер у вас у профілі **{total}** монет.",
-        "reward_already_claimed": "Нагорода вже отримана — {name}",
+        "reward_already_claimed": "<:icons30:1274836408057725009> Нагорода вже отримана — {name}",
         "already_claimed_message": "Ви **вже** отримали **нагороду!**\nВи можете **отримати** наступну через **{hours}** год **{minutes}** хв.",
         "thank_you": "Дякуємо за вашу активність!",
         "buy_coins": "Купити монети",
@@ -27,9 +27,9 @@ translations = {
     },
     "en": {
         "view_reward": "Get rewarded with coins.",
-        "reward_received": "Reward received — {name}",
+        "reward_received": "<:icons37:1274836468971344006> Reward received — {name}",
         "reward_message": "You received a reward of **{amount}** coins.\nNow you have **{total}** coins in your profile.",
-        "reward_already_claimed": "Reward already claimed — {name}",
+        "reward_already_claimed": "<:icons30:1274836408057725009> Reward already claimed — {name}",
         "already_claimed_message": "You have **already** claimed your **reward!**\nYou can **claim** the next one in **{hours}** h **{minutes}** m.",
         "thank_you": "Thank you for your activity!",
         "buy_coins": "Buy coins",

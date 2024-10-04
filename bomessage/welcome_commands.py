@@ -25,7 +25,7 @@ class WelcomeCommand(commands.Cog):
 
         # Создаем сообщение embed
         embed = disnake.Embed(
-            title="<:Stickerus7:1269746114932900041> " + locale["welcome_title"],
+            title=locale["welcome_title"],
             description=(
                 f"{locale['welcome_message'].format(member=member.mention)}\n\n" +
                 locale["recommendation"] + "\n\n" +
@@ -88,7 +88,7 @@ class WelcomeCommand(commands.Cog):
 
         # Обновляем embed с новым языком
         locale = translations[lang_code]
-        embed.title = "<:Stickerus7:1269746114932900041> " + locale["welcome_title"]
+        embed.title =locale["welcome_title"]
         embed.description = (
             f"{locale['welcome_message'].format(member=member.mention)}\n\n" +
             locale["recommendation"] + "\n\n" +

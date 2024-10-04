@@ -8,7 +8,7 @@ import re
 
 def setup_profile_commands(bot: commands.Bot):
     @bot.slash_command(name='profile', description=translations["en"]["view_profile"])
-    async def profile(inter: disnake.ApplicationCommandInteraction, пользователь: disnake.User = None):
+    async def profile(inter: disnake.ApplicationCommandInteraction, member: disnake.User = None):
         await inter.response.defer()
 
         # Получаем язык пользователя
@@ -17,7 +17,7 @@ def setup_profile_commands(bot: commands.Bot):
         locale = translations[user_language]
 
         try:
-            user = пользователь or inter.author
+            user = member or inter.author
             user_id = str(user.id)
             data = load_data()  
             ensure_user_profile(data, user_id)  
