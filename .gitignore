@@ -3,5 +3,6 @@
 
 admin/us_error_log.json
 admin/family_data.json
+admin/servers_data.json
 admin/user_data.json
 supecomma/config.py
