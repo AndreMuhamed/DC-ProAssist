@@ -29,7 +29,7 @@ from user_tops.avatar_commands import setup_avatar_commands
 from user_tops.banner_commands import setup_banner_commands  
 from letproject.questionnaires_profile import setup_questionnaires_profile
 from letproject.alinitiative import setup_all_initiative
-from entertainment.youtube_music import setup_music_commands
+from entertainment.youtube_music import setup as setup_musiccog
 from entertainment.magic_commands import setup_magic_commands
 from entertainment.layout_fixer import setup as setup_layout_fixer
 from bomessage.auto_reply import send_auto_reply
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     setup_deletemessagescog(bot)
 
     # Розваги пользователей
-    setup_music_commands(bot)
+    setup_musiccog(bot)
     setup_magic_commands(bot)
     setup_layout_fixer(bot)
     setup_test_command(bot)
