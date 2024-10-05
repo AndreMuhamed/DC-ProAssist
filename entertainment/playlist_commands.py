@@ -16,8 +16,7 @@ class Playlist(commands.Cog):
         lang = get_user_language(ctx)
         embed = disnake.Embed(
             title=translations[lang]["error_title"],
-            description=message,
-            color=disnake.Color.red()  # Устанавливаем красный цвет для ошибок
+            description=message
         )
         # Устанавливаем аватар пользователя
         embed.set_thumbnail(url=ctx.author.display_avatar.url if ctx.author.display_avatar else ctx.author.default_avatar.url)
