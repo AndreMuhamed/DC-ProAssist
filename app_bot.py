@@ -30,6 +30,7 @@ from user_tops.banner_commands import setup_banner_commands
 from letproject.questionnaires_profile import setup_questionnaires_profile
 from letproject.alinitiative import setup_all_initiative
 from entertainment.podcast_commands import setup as setup_podcast
+from entertainment.playlist_commands import setup as setup_playlist
 from entertainment.magic_commands import setup_magic_commands
 from entertainment.layout_fixer import setup as setup_layout_fixer
 from bomessage.auto_reply import send_auto_reply
@@ -77,6 +78,7 @@ if __name__ == "__main__":
 
     # Розваги пользователей
     setup_podcast(bot)
+    setup_playlist(bot)
     setup_magic_commands(bot)
     setup_layout_fixer(bot)
     setup_test_command(bot)
