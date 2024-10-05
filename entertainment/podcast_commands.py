@@ -7,9 +7,6 @@ import random
 import asyncio
 from Translator.podcast import translations, get_user_language  # Импортируем переводы и функцию
 
-# Устанавливаем кодировку UTF-8 для вывода
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
 # Настройки для yt-dlp
 ytdl_format_options = {
     'format': 'bestaudio/best',
@@ -41,7 +38,12 @@ class Podcast(commands.Cog):
 
             voice_channel = interaction.author.voice.channel if interaction.author.voice else None
             if not voice_channel:
-                await interaction.followup.send(lang["must_be_in_voice"], ephemeral=True)
+                embed = disnake.Embed(
+                    title=lang["Errorка"],
+                    description=lang["must_be_in_voice"]
+                )
+                embed.set_thumbnail(url=interaction.author.display_avatar.url if interaction.author.display_avatar else interaction.author.default_avatar.url)
+                await interaction.followup.send(embed=embed, ephemeral=True)  # Только для автора
                 return
 
             voice_client = await voice_channel.connect()
@@ -49,7 +51,7 @@ class Podcast(commands.Cog):
             # Выбираем случайное видео
             video_url = random.choice(video_urls)
 
-            # Создание эмбеда
+            # Создание эмбеда для подкаста
             embed = disnake.Embed(
                 title=lang["listen_podcast"],
                 description=lang["interesting_today"]
@@ -59,7 +61,7 @@ class Podcast(commands.Cog):
             embed.set_image(url="https://cdn.discordapp.com/attachments/963534892082290688/1267128077117292655/FaS7iOhBBW0.jpg")
             embed.set_footer(text=lang["footer_text"])  # Текст подвала
 
-            # Отправляем сообщение с эмбедом
+            # Отправляем сообщение с эмбеддом
             await interaction.followup.send(embed=embed)
 
             # Проигрывание музыки
@@ -70,9 +72,14 @@ class Podcast(commands.Cog):
             await voice_client.disconnect()
 
         except Exception as e:
-            # Ловим любые исключения и отправляем сообщение об ошибке
+            # Ловим любые исключения и отправляем сообщение об ошибке в виде эмбеда
             print(f"Interaction error: {str(e)}")
-            await interaction.followup.send(f"{lang['error_occurred']}: {str(e)}", ephemeral=True)
+            embed = disnake.Embed(
+                title=lang["Errorка"],
+                description=f"{lang['error_occurred']}: {str(e)}"
+            )
+            embed.set_thumbnail(url=interaction.author.display_avatar.url if interaction.author.display_avatar else interaction.author.default_avatar.url)
+            await interaction.followup.send(embed=embed, ephemeral=True)  # Только для автора
 
     async def start_playing(self, voice_client, url, interaction, lang):
         """Начинает воспроизведение трека с YouTube."""
@@ -80,7 +87,12 @@ class Podcast(commands.Cog):
             info = ytdl.extract_info(url, download=False)
             url2 = info.get('url') or info.get('webpage_url')
             if not url2:
-                await interaction.followup.send(lang["stream_error"], ephemeral=True)
+                embed = disnake.Embed(
+                    title=lang["Errorка"],
+                    description=lang["stream_error"]
+                )
+                embed.set_thumbnail(url=interaction.author.display_avatar.url if interaction.author.display_avatar else interaction.author.default_avatar.url)
+                await interaction.followup.send(embed=embed, ephemeral=True)  # Только для автора
                 return
 
             # Используем FFmpeg для проигрывания потока
@@ -88,11 +100,18 @@ class Podcast(commands.Cog):
 
         except Exception as e:
             print(f"Exception: {str(e)}")  # Логирование ошибки для отладки
-            await interaction.followup.send(f"{lang['error_occurred']}: {str(e)}", ephemeral=True)
+            embed = disnake.Embed(
+                title=lang["Errorка"],
+                description=f"{lang['error_occurred']}: {str(e)}"
+            )
+            embed.set_thumbnail(url=interaction.author.display_avatar.url if interaction.author.display_avatar else interaction.author.default_avatar.url)
+            await interaction.followup.send(embed=embed, ephemeral=True)  # Только для автора
             await voice_client.disconnect()  # Переподключение в случае ошибки
 
 def setup(bot: commands.Bot):
     bot.add_cog(Podcast(bot))
+
+
 
 
 

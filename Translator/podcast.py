@@ -6,25 +6,28 @@ translations = {
         "listen_podcast": "<:icons13:1274836249810698250> Listen to our mini-podcast!",
         "interesting_today": "Today, the team of **Andrey Muhameda** has prepared an incredible podcast for you, filled with **fascinating** topics and interesting conversations.",
         "footer_text": "Dive into a world of knowledge and inspiration!",
-        "error_occurred": "An error occurred while processing the command.",
-        "must_be_in_voice": "You must be in a voice channel to play music.",
-        "stream_error": "Failed to get the stream for playback."
+        "Errorка":"<:icons65:1274836965111496714> Mini-podcast error!",
+        "error_occurred": "```An error occurred while processing the command.```",
+        "must_be_in_voice": "```You must be in a voice channel to play music.```",
+        "stream_error": "```Failed to get the stream for playback.```"
     },
     "ru": {
         "listen_podcast": "<:icons13:1274836249810698250> Слушай наш мини-подкаст!",
         "interesting_today": "Сегодня команда **Андрея Мухамеда** подготовила для вас невероятный подкаст, наполненный **увлекательными** темами и интересными беседами.",
         "footer_text": "Погружайтесь в мир знаний и вдохновения!",
-        "error_occurred": "Произошла ошибка при обработке команды.",
-        "must_be_in_voice": "Вы должны находиться в голосовом канале, чтобы воспроизвести музыку.",
-        "stream_error": "Не удалось получить поток для воспроизведения."
+        "Errorка":"<:icons65:1274836965111496714> Ошибка мини-подкаста!",
+        "error_occurred": "```Произошла ошибка при обработке команды.```",
+        "must_be_in_voice": "```Вы должны находиться в голосовом канале, чтобы воспроизвести музыку.```",
+        "stream_error": "```Не удалось получить поток для воспроизведения.```"
     },
     "uk": {
         "listen_podcast": "<:icons13:1274836249810698250> Слухай наш міні-подкаст!",
         "interesting_today": "Сьогодні команда **Андрея Мухамеда** підготувала для вас неймовірний подкаст, наповнений **цікавими** темами та захоплюючими бесідами.",
         "footer_text": "Пориньте у світ знань та натхнення!",
-        "error_occurred": "Сталася помилка під час обробки команди.",
-        "must_be_in_voice": "Ви повинні бути в голосовому каналі, щоб відтворювати музику.",
-        "stream_error": "Не вдалося отримати потік для відтворення."
+        "Errorка":"<:icons65:1274836965111496714> Помилка міні-подкасту!",
+        "error_occurred": "Сталася помилка під час обробки команди.```",
+        "must_be_in_voice": "```Ви повинні бути в голосовому каналі, щоб відтворювати музику.```",
+        "stream_error": "```Не вдалося отримати потік для відтворення.```"
     }
 }
 
