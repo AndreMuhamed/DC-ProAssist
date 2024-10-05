@@ -25,7 +25,7 @@ translations = {
         "voice_online": "Voice online",
         "profile_created": "Profile created",
         "not_provided": "Not provided",
-        "profile_title": "Profile — {user}",
+        "profile_title": "<:icons4:1274836172404822077> Profile — {user}",
         "buy_coins": "Buy coins",
         "seller_link_title": "Seller link:",
         "buy_coins_title": "Buying coins in Online Shop!",
